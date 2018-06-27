@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configmap-pod-test
+  labels:
+    app: test
+
+spec:
+  containers:
+    - name: configmap-pod-test
+      image: busybox:latest
+      args:
+        - /bin/sh
+        - -c
+        - env | grep 'APP'
+      env:
+        - name: APPLOGLEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: configmap-test
+              key: apploglevel
+        - name: APPDATADIR
+          valueFrom:
+            configMapKeyRef:
+              name: configmap-test
+              key: appdatadir
+  restartPolicy: Never

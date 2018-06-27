@@ -1,0 +1,19 @@
+apiVersion: v1  
+kind: Pod  
+metadata:  
+        name: nginx-test  
+        labels:  
+                app: nginx-test  
+spec:  
+  containers:  
+    - name: nginx-test  
+      image: nginx  
+      ports:  
+        - containerPort: 80
+      volumeMounts:
+        - mountPath: /mypvc
+          name: mypvc     
+  volumes:
+    - name: mypvc
+      persistentVolumeClaim:
+        claimName: nfs-pvc1

@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx
+        track: stable
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        resources:      #绝对值，不管在单核或多核上1000m或1（apisever会置换格式）代表1个cpu,多个resources配置资源叠加,将会传参给docker run 
+          requests:      #初始大小，等于或小于上限大小
+            cpu: "2000m"
+            memory: "128Mi"
+          limits:        #上限大小，等于或大于初始大小
+            cpu: "3000m"
+            memory: "256Mi"
+
